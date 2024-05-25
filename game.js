@@ -1,23 +1,26 @@
+let humanScore = 0;
+let computerScore = 0;
+let round = 0;
+
+
+// basic game functions below
+
 function getComputerChoice() {
     let choice = Math.random()
     if (choice <= .33) {
-        return "rock"
+        let computerChoice = "rock";
+        return computerChoice;
     }
     else if (choice >= .67) {
-        return "paper"
+        let computerChoice = "paper";
+        return computerChoice;
     }
     else {
-        return "scissors"
+        let computerChoice = "scissors";
+        return computerChoice;
     }
 }
-    
-function getHumanChoice() {
-    let choice = prompt("Choose rock, paper, or scissors!")
-    return choice.toLowerCase()
-}
 
-let humanScore = 0
-let computerScore = 0
 
 function playRound(humanChoice, computerChoice) {
     if (humanChoice == "rock" && computerChoice == "scissors") {
@@ -50,13 +53,54 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
+
+// Adding event listeners to each button
+function alertRock() {
+    alert("You chose rock!");
+    let humanChoice = "rock";
+    let computerChoice = getComputerChoice();
+    playGame();
+}
+
+function alertPaper() {
+    alert("You chose paper!");
+    let humanChoice = "paper";
+    let computerChoice = getComputerChoice();
+    playRound(humanChoice, computerChoice);
+}
+
+function alertScissors() {
+    alert("You chose scissors!");
+    let humanChoice = "scissors";
+    let computerChoice = getComputerChoice();
+    playRound(humanChoice, computerChoice);
+}
+
+const rock = document.querySelector("#rock");
+rock.addEventListener("click", alertRock);
+
+const scissors = document.querySelector("#scissors");
+scissors.addEventListener("click", alertScissors);
+
+const paper = document.querySelector("#paper");
+paper.addEventListener("click", alertPaper);
+
+
 function playGame() {
-    let round = 0
-    while (round < 5) {
-        humanChoice = getHumanChoice()
-        computerChoice = getComputerChoice()
-        playRound(humanChoice, computerChoice)
-        round = humanScore + computerScore
+    
+    const rock = document.querySelector("#rock");
+    rock.addEventListener("click", alertRock);
+
+    const scissors = document.querySelector("#scissors");
+    scissors.addEventListener("click", alertScissors);
+
+    const paper = document.querySelector("#paper");
+    paper.addEventListener("click", alertPaper);
+    
+    round = humanScore + computerScore;
+    
+    if (round >= 5) {
+        alert("Game over!");
     }
 }
 
