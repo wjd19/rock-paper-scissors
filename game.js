@@ -21,59 +21,82 @@ function getComputerChoice() {
     }
 }
 
-
-function playRound(humanChoice, computerChoice) {
-    if (humanChoice == "rock" && computerChoice == "scissors") {
-        humanScore++
-        console.log(`You win! ${humanChoice} beats ${computerChoice}!`)
-        return
-    }
-
-    else if (humanChoice == "paper" && computerChoice == "rock") {
-        humanScore++
-        console.log(`You win! ${humanChoice} beats ${computerChoice}!`)
-        return
-    }
-
-    else if (humanChoice == "scissors" && computerChoice == "paper") {
-        humanScore++
-        console.log(`You win! ${humanChoice} beats ${computerChoice}!`)
-        return
-    }
-
-    else if (humanChoice == computerChoice) {
-        console.log("You tied! Go again!")
-        return
-    }
-
-    else {
-        computerScore++
-        console.log(`You lose! ${computerChoice} beats ${humanChoice}!`)
-        return
-    }
-}
-
-
-// Adding event listeners to each button
+// these next three functions will go inside of event listeners
 function alertRock() {
-    alert("You chose rock!");
+    round = humanScore + computerScore;
     let humanChoice = "rock";
     let computerChoice = getComputerChoice();
-    playGame();
+    playRound(humanChoice, computerChoice);
+    console.log(round);
 }
 
 function alertPaper() {
-    alert("You chose paper!");
+    round = humanScore + computerScore;
     let humanChoice = "paper";
     let computerChoice = getComputerChoice();
     playRound(humanChoice, computerChoice);
 }
 
 function alertScissors() {
-    alert("You chose scissors!");
+    round = humanScore + computerScore;
     let humanChoice = "scissors";
     let computerChoice = getComputerChoice();
     playRound(humanChoice, computerChoice);
+}
+
+// check score at end of each round to see if series is over
+function finalScore(humanScore, computerScore) {
+    if (round >= 4) {
+        if (humanScore > computerScore) {
+            alert('Congrats! You win the series!');
+        }
+        else {
+            alert('Boooooo! You lose the series!');
+        }
+        const score = document.createElement("div");
+        score.classList.add("score");
+        score.textContent = `Final score: You: ${humanScore} Opponent: ${computerScore}`;
+        container.appendChild(score);
+    }
+    round = 0;
+    return;
+}
+
+function playRound(humanChoice, computerChoice) {
+    if (humanChoice == "rock" && computerChoice == "scissors") {
+        humanScore++;
+        alert(`You win! ${humanChoice} beats ${computerChoice}!`)
+    }
+
+    else if (humanChoice == "paper" && computerChoice == "rock") {
+        humanScore++
+        alert(`You win! ${humanChoice} beats ${computerChoice}!`)
+    }
+
+    else if (humanChoice == "scissors" && computerChoice == "paper") {
+        humanScore++
+        alert(`You win! ${humanChoice} beats ${computerChoice}!`)
+    }
+
+    else if (humanChoice == computerChoice) {
+        alert("You tied! Go again!")
+    }
+
+    else {
+        computerScore++;
+        alert(`You lose! ${computerChoice} beats ${humanChoice}!`)
+    }
+
+    //container to display results on page
+    const container = document.querySelector("#container");
+    const content = document.createElement("div");
+    content.classList.add("content");
+    content.textContent = `You have ${humanScore} points. Your opponent has ${computerScore} points.`;
+    container.appendChild(content);
+
+    //check score
+    finalScore(humanScore, computerScore);
+    return;
 }
 
 const rock = document.querySelector("#rock");
@@ -85,23 +108,3 @@ scissors.addEventListener("click", alertScissors);
 const paper = document.querySelector("#paper");
 paper.addEventListener("click", alertPaper);
 
-
-function playGame() {
-    
-    const rock = document.querySelector("#rock");
-    rock.addEventListener("click", alertRock);
-
-    const scissors = document.querySelector("#scissors");
-    scissors.addEventListener("click", alertScissors);
-
-    const paper = document.querySelector("#paper");
-    paper.addEventListener("click", alertPaper);
-    
-    round = humanScore + computerScore;
-    
-    if (round >= 5) {
-        alert("Game over!");
-    }
-}
-
-playGame()
